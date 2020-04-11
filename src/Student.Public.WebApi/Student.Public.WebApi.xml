@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Student.Public.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:Student.Public.WebApi.Controllers.Oauth2Controller.AuthMiner(System.Threading.CancellationToken,System.String,System.String,System.String,System.String,Student.Public.Domain.Authentication.UserAuthenticationService)">
+            <summary>
+            User authentication
+            </summary>
+            <param name="grantType">(password, refresh_token)</param>
+            <param name="userName">Email</param>
+            <param name="password">Password</param>
+            <param name="refreshToken">Refresh token</param>
+            <response code="200">Successfully</response>
+            <response code="400">Bad request</response>
+        </member>
+        <member name="P:Student.Public.WebApi.Models.Oauth.ErrorView.Error">
+            <summary>
+            Error code https://tools.ietf.org/html/rfc6749#section-5.2
+            </summary>
+        </member>
+        <member name="P:Student.Public.WebApi.Models.Oauth.ErrorView.ErrorDescription">
+            <summary>
+            Human-readable text providing additional information
+            </summary>
+        </member>
+        <member name="P:Student.Public.WebApi.Models.Oauth.TokenView.AccessToken">
+            <summary>
+            The access token issued by the authorization server
+            </summary>
+        </member>
+        <member name="P:Student.Public.WebApi.Models.Oauth.TokenView.TokenType">
+            <summary>
+            The type of the token issued. Example: Bearer 
+            </summary>
+        </member>
+        <member name="P:Student.Public.WebApi.Models.Oauth.TokenView.ExpiresIn">
+            <summary>
+            The lifetime in seconds of the access token
+            </summary>
+        </member>
+        <member name="P:Student.Public.WebApi.Models.Oauth.TokenView.RefreshToken">
+            <summary>
+            The refresh token, which can be used to obtain new  access tokens using the same authorization grant
+            </summary>
+        </member>
+        <member name="T:Student.Public.WebApi.Models.VersionView">
+            <summary>
+            Возвращает версию сервиса
+            </summary>
+        </member>
+        <member name="P:Student.Public.WebApi.Models.VersionView.Version">
+            <summary>
+            Текущая версия сервиса
+            </summary>
+        </member>
+    </members>
+</doc>
