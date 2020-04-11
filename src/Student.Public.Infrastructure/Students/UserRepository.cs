@@ -15,14 +15,15 @@ namespace Student.Public.Infrastructure.Students
             _context = context;
         }
 
-        public async Task<Domain.Students.Entity.Student> Get(Guid id, CancellationToken cancellationToken)
+        public async Task<Domain.Students.Entity.Student> Get(Guid id, Guid mentorId, CancellationToken cancellationToken)
         {
-            return await _context.Students.SingleOrDefaultAsync(_ => _.Id == id, cancellationToken);
+            return await _context.Students.SingleOrDefaultAsync(_ => _.Id == id &&
+                                                                     _.MentorId == mentorId, cancellationToken);
         }
 
-        public async Task<Domain.Students.Entity.Student> GetByPublicApi(String id, CancellationToken cancellationToken)
+        public async Task<Domain.Students.Entity.Student> GetByPublicId(String publicId, CancellationToken cancellationToken)
         {
-            return await _context.Students.SingleOrDefaultAsync(_ => _.PublicId == id, cancellationToken);
+            return await _context.Students.SingleOrDefaultAsync(_ => _.PublicId == publicId, cancellationToken);
         }
 
         public async Task Save(Domain.Students.Entity.Student student, CancellationToken cancellationToken)

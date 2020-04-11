@@ -56,6 +56,7 @@ namespace Student.Public.WebApi
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             #region Authentication
+
             services.Configure<JwtAuthOptions>(Configuration.GetSection("Auth:UserJwt"));
             services.AddAuthentication(o =>
             {
@@ -92,31 +93,41 @@ namespace Student.Public.WebApi
             {
                 options.UseMySql(Configuration.GetConnectionString("Student"));
             });
-            services.AddDbContext<RefreshTokenStoreDbContext>(options =>
-            {
-                options.UseMySql(Configuration.GetConnectionString("Student"));
-            });
+            services.AddDbContext<RefreshTokenStoreDbContext>(options => { options.UseMySql(Configuration.GetConnectionString("Student")); });
 
             #endregion
-
-
+            
             #region User
 
             services.AddScoped<Domain.Users.IUserRepository, Infrastructure.Users.UserRepository>();
             services.AddScoped<Domain.Users.IPasswordHasher, PasswordHasher>();
             services.AddScoped<Domain.Users.UserRegistrar>();
-            services.AddDbContext<Infrastructure.Users.UserDbContext>(options =>
+            services.AddDbContext<Infrastructure.Users.UserDbContext>(options => { options.UseMySql(Configuration.GetConnectionString("Student")); });
+
+            #endregion
+            
+            #region Students
+
+            services.AddScoped<Domain.Students.IStudentRepository, Infrastructure.Students.StudentRepository>();
+            services.AddScoped<Domain.Students.StudentCreator>();
+            services.AddDbContext<Infrastructure.Students.StudentDbContext>(options =>
             {
                 options.UseMySql(Configuration.GetConnectionString("Student"));
             });
 
             #endregion
 
-            services.AddScoped<IDbConnection, MySqlConnection>(_ => new MySqlConnection(Configuration.GetConnectionString("Student")));
-
-            services.RegQueryProcessor(registry => { });
-
-
+            #region Queries
+            services.AddDbContextPool<Student.Public.Queries.Infrastructure.Students.StudentDbContext>(options =>
+            {
+                options.UseMySql(Configuration.GetConnectionString("Student"));
+            });
+            services.RegQueryProcessor(registry =>
+            {
+                registry.Register<Student.Public.Queries.Infrastructure.Students.StudentQueryHandler>();
+            });
+            #endregion
+            
             #region Включение миграции в проект
 
             services.AddDbContext<MigrateDbContext>(options =>

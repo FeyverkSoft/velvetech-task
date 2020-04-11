@@ -1,9 +1,11 @@
-﻿using System.Threading;
+﻿using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Student.Public.Domain.Users;
 using Student.Public.Domain.Users.Exceptions;
+using Student.Public.WebApi.Exceptions;
 using Student.Public.WebApi.Models.Registrations;
 
 namespace Student.Public.WebApi.Controllers
@@ -37,7 +39,7 @@ namespace Student.Public.WebApi.Controllers
                 return NoContent();
             }
             catch (UserAlreadyExistsException){
-                return Conflict();
+                throw new ApiException(HttpStatusCode.Conflict, ErrorCodes.UserAlreadyExists, "User already exists");
             }
         }
     }

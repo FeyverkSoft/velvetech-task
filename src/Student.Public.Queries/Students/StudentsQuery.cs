@@ -9,6 +9,6 @@ namespace Student.Public.Queries.Students
 
         public StudentsQuery(Int32 offset, Int32 limit, Guid userId, String filter) : base(offset, limit)
             => (UserId, Filter)
-                = (userId, filter);
+                = (userId, filter?.Trim());
     }
 }

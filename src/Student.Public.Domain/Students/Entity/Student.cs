@@ -9,6 +9,7 @@ namespace Student.Public.Domain.Students.Entity
         /// Идентификатор студента
         /// </summary>
         public Guid Id { get; }
+
         /// <summary>
         /// не будем усложнять, и делать вариант что у студента может быть много менторов
         /// </summary>
@@ -17,27 +18,27 @@ namespace Student.Public.Domain.Students.Entity
         /// <summary>
         /// Публичный идентификатор студента
         /// </summary>
-        public String PublicId { get; }
+        public String PublicId { get; private set; }
 
         /// <summary>
         /// Имя
         /// </summary>
-        public String FirstName { get; }
+        public String FirstName { get; private set; }
 
         /// <summary>
         /// Фамилия
         /// </summary>
-        public String LastName { get; }
+        public String LastName { get; private set; }
 
         /// <summary>
         /// Отчество
         /// </summary>
-        public String SecondName { get; }
+        public String SecondName { get; private set; }
 
         /// <summary>
         /// Пол
         /// </summary>
-        public StudentGender Gender { get; }
+        public StudentGender Gender { get; private set; }
 
         /// <summary>
         /// Дата последнего изменения записи
@@ -55,16 +56,35 @@ namespace Student.Public.Domain.Students.Entity
         public StudentStatus Status { get; private set; }
 
         public Guid ConcurrencyTokens { get; private set; } = Guid.NewGuid();
-        
+
         internal Student(Guid id, Guid mentorId, String publicId, String firstName, String lastName, String secondName, StudentGender gender)
-        => (Id, MentorId, PublicId, FirstName, LastName, SecondName, Gender)
-            = (id, mentorId, publicId, firstName, lastName, secondName, gender);
+            => (Id, MentorId, PublicId, FirstName, LastName, SecondName, Gender)
+                = (id, mentorId, publicId, firstName, lastName, secondName, gender);
 
         public void MarkAsDeleted()
         {
             if (Status == StudentStatus.Deleted)
                 return;
             Status = StudentStatus.Deleted;
+            UpdateDate = DateTime.UtcNow;
+            ConcurrencyTokens = Guid.NewGuid();
+        }
+
+        public void Update(String firstName, String lastName, String secondName, StudentGender gender, String publicId)
+        {
+            if (FirstName == firstName &&
+                LastName == lastName &&
+                SecondName == secondName &&
+                Gender == gender &&
+                PublicId == publicId)
+                return;
+
+            FirstName = firstName;
+            LastName = lastName;
+            SecondName = secondName;
+            Gender = gender;
+            PublicId = publicId;
+            
             UpdateDate = DateTime.UtcNow;
             ConcurrencyTokens = Guid.NewGuid();
         }

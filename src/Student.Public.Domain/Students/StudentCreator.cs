@@ -27,11 +27,10 @@ namespace Student.Public.Domain.Students
             if (!String.IsNullOrEmpty(publicId) && (publicId.Length < 6 || publicId.Length > 16))
                 throw new ArgumentException("Incorrect publicId", nameof(publicId));
 
-            Entity.Student existsStudent;
-            if (String.IsNullOrEmpty(publicId))
-                existsStudent = await _repository.GetByPublicApi(publicId, cancellationToken);
-            else
-                existsStudent = await _repository.Get(id, cancellationToken);
+            var existsStudent = await _repository.Get(id, mentorId, cancellationToken);
+
+            if (existsStudent == null && !String.IsNullOrEmpty(publicId))
+                existsStudent = await _repository.GetByPublicId(publicId, cancellationToken);
 
             if (existsStudent != null)
                 if (existsStudent.Id == id &&

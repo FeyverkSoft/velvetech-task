@@ -5,8 +5,8 @@ namespace Student.Public.WebApi.Models.Students
 {
     public sealed class StudentsQueryBinding
     {
-        public Int32 Offset { get; set; }
-        public Int32 Limit { get; set; }
+        public Int32 Offset { get; set; } = 0;
+        public Int32 Limit { get; set; } = 20;
         public String Filter { get; set; }
     }
 

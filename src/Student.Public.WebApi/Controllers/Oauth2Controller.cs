@@ -32,6 +32,7 @@ namespace Student.Public.WebApi.Controllers
             [FromForm(Name = "refresh_token")] String refreshToken,
             [FromServices] UserAuthenticationService authenticationService)
         {
+            // много дичи согласно RFC
             const String passwordGrantType = "password";
             const String refreshTokenGrantType = "refresh_token";
 
