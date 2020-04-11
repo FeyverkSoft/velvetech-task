@@ -154,9 +154,9 @@ namespace Student.Public.WebApi
             });
             app.UseHttpsRedirection();
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+            app.UseAspNetCorePathBase();
 
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
