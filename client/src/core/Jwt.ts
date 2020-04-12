@@ -13,7 +13,7 @@ export default () => {
     if (error.response.status !== 401) {
       return new Promise((resolve, reject) => {
         if (error.response.data)
-          reject(error.response.data.detail);
+          reject(error.response.data.detail || error.response.data.error_description);
         else
           reject(error.response);
       });

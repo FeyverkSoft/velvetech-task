@@ -6,12 +6,12 @@ import { IStore } from '../../_helpers';
 import { authService } from '../../_services';
 
 interface UserFormProps {
-    LogIn(username: string, password: string): void;
+    Reg(username: string, login: string, password: string): void;
 }
 
-class _LoginForm extends React.Component<UserFormProps, any> {
+class _RegForm extends React.Component<UserFormProps, any> {
     handleSubmit = (values: any) => {
-        this.props.LogIn(values.username, values.password);
+        this.props.Reg(values.name, values.login, values.password);
     };
 
     render() {
@@ -20,11 +20,25 @@ class _LoginForm extends React.Component<UserFormProps, any> {
                 onFinish={this.handleSubmit}
             >
                 <Form.Item
-                    name="username"
+                    name="login"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your username!',
+                            message: 'Please input your login!',
+                        },
+                    ]}
+                >
+                    <Input
+                        prefix={<UserOutlined />}
+                        placeholder='login'
+                    />
+                </Form.Item>
+                <Form.Item
+                    name="name"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your name!',
                         },
                     ]}
                 >
@@ -53,7 +67,7 @@ class _LoginForm extends React.Component<UserFormProps, any> {
                         type="primary"
                         htmlType="submit"
                     >
-                        Login
+                        Reg
                     </Button>
                 </Form.Item>
             </Form>
@@ -61,16 +75,16 @@ class _LoginForm extends React.Component<UserFormProps, any> {
     }
 }
 
-const connectedLoginForm = connect<{}, {}, any, IStore>(
+const connectedRegForm = connect<{}, {}, any, IStore>(
     (state: IStore) => {
-        return {        };
+        return {};
     },
     (dispatch: Function) => {
         return {
-            LogIn: (username: string, password: string) => {
-                authService.logIn(username, password);
+            Reg: (username: string, login: string, password: string) => {
+                authService.Reg(username, login, password);
             },
         }
-    })(_LoginForm);
+    })(_RegForm);
 
-export { connectedLoginForm as LoginForm };
+export { connectedRegForm as RegForm };

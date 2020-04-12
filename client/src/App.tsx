@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import { Menu, Layout } from 'antd';
 import { Logo, Header } from './_components/Header/Header';
 import { history } from './_helpers';
-import { PrivateRoute } from './_components/PrivateRoute';
+import { PrivateRoute, NotPrivateRoute } from './_components/PrivateRoute';
 import { NotFoundController } from './controller/NotFoundController';
 import { AuthController } from './controller/AuthController';
 import { LogOutController } from './controller/LogOutController';
@@ -28,22 +28,22 @@ export const App = ({ ...props }) => {
             theme="light"
           >
             <Menu.Item key="/logout" >
-              <PrivateLink to="logout" exact>
+              <Link to="logout">
                 logout
-                </PrivateLink>
+              </Link>
             </Menu.Item>
           </Menu>
         </Header>
         <Content style={{ display: 'flex', flexDirection: 'row', flex: '1 1 100%', width: '90wv' }}>
           <Switch>
-            <Route path='/auth' component={AuthController} />
+            <NotPrivateRoute path='/auth' component={AuthController} />
             <PrivateRoute path='/logout' component={LogOutController} />
             <PrivateRoute path='/' component={StudentsController} />
             <Route component={NotFoundController} />
           </Switch>
         </Content>
       </Router>
-      <Footer style={{ display: 'flex', justifyItems: 'spice-beetwin' }}><div>© Peter 2019 - {(new Date()).getFullYear()}</div>
+      <Footer style={{ display: 'flex', justifyContent: "space-between" }}><div>© Peter 2020 - {(new Date()).getFullYear()}</div>
         <div>developed by Mazin Peter</div></Footer>
     </Layout>
   );
