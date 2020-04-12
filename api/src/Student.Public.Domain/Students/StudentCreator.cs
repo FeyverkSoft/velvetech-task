@@ -30,7 +30,7 @@ namespace Student.Public.Domain.Students
             var existsStudent = await _repository.Get(id, mentorId, cancellationToken);
 
             if (existsStudent == null && !String.IsNullOrEmpty(publicId))
-                existsStudent = await _repository.GetByPublicId(publicId, cancellationToken);
+                existsStudent = await _repository.GetByPublicId(publicId?.Trim(), cancellationToken);
 
             if (existsStudent != null)
                 if (existsStudent.Id == id &&
@@ -38,13 +38,13 @@ namespace Student.Public.Domain.Students
                     existsStudent.LastName == lastName &&
                     existsStudent.SecondName == secondName &&
                     existsStudent.Gender == gender &&
-                    existsStudent.PublicId == publicId &&
+                    existsStudent.PublicId == publicId?.Trim() &&
                     existsStudent.MentorId == mentorId)
                     return existsStudent;
                 else
                     throw new StudentAlreadyExistsException();
 
-            return new Entity.Student(id, mentorId, publicId, firstName, lastName, secondName, gender);
+            return new Entity.Student(id, mentorId, publicId?.Trim(), firstName, lastName, secondName, gender);
         }
     }
 }

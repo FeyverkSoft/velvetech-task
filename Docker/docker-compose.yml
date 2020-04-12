@@ -12,11 +12,9 @@ services:
       - velvetech-mariadb
     restart: always
 
-#  velvetech-client:
-#    image: maiznpetr/velvetech-client:latest
-#    depends_on:
-#      - velvetech-proxy
-#    restart: always
+  velvetech-client:
+    image: maiznpetr/velvetech-client:latest
+    restart: always
 
   velvetech-proxy:
     image: nginx:1.15.10-alpine
@@ -27,8 +25,11 @@ services:
       - ./nginx/velvetech.conf:/etc/nginx/conf.d/default.conf    
       - ./nginx/velvetech-upstreams/api.conf:/etc/nginx/conf.d/velvetech-upstreams/api.conf
       - ./nginx/velvetech-locations/api.conf:/etc/nginx/conf.d/velvetech-locations/api.conf
+      - ./nginx/velvetech-upstreams/client.conf:/etc/nginx/conf.d/velvetech-upstreams/client.conf
+      - ./nginx/velvetech-locations/client.conf:/etc/nginx/conf.d/velvetech-locations/client.conf
     depends_on:
       - velvetech-webapi
+      - velvetech-client
     restart: always
 
   velvetech-mariadb:
