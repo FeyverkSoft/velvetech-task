@@ -5,7 +5,7 @@ import { HomeOutlined } from '@ant-design/icons';
 import style from './auth.module.scss';
 import { Content } from '../_components/Content/Content';
 import { Link } from 'react-router-dom';
-import { IStudent, Gender } from '../_services/students/GuildInfo';
+import { IStudent, Gender } from '../_services/students/IStudent';
 import Table, { ColumnProps } from 'antd/lib/table';
 import { IStore } from '../_helpers';
 import { studentsInstance } from '../_actions';

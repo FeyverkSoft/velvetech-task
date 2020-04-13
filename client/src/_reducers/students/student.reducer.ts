@@ -1,7 +1,7 @@
-import { StudentActionsType } from "../../_actions";
-import { IAction, IHolded } from "../../core";
+import { StudentActionsTypes } from "../../_actions";
+import { IHolded } from "../../core";
 import clonedeep from 'lodash.clonedeep';
-import { IStudent } from "../../_services/students/GuildInfo";
+import { IStudent } from "../../_services/students/IStudent";
 
 export class StudentStore {
     total: number;
@@ -20,32 +20,32 @@ export class StudentStore {
     }
 }
 
-export function students(state: StudentStore = new StudentStore(), action: IAction<StudentActionsType>): StudentStore {
+export function students(state: StudentStore = new StudentStore(), action: StudentActionsTypes): StudentStore {
     var clonedState = clonedeep(state);
     switch (action.type) {
 
-        case StudentActionsType.PROC_GET_LIST:
+        case 'PROC_GET_STUDENTS':
             clonedState.holding = true;
             return clonedState;
-        case StudentActionsType.SUCC_GET_LIST:
+        case 'SUCC_GET_STUDENTS':
             clonedState.students = action.students.items;
             clonedState.holding = false;
             return clonedState;
-        case StudentActionsType.FAILED_GET_LIST:
+        case 'FAILED_GET_STUDENTS':
             clonedState.holding = false;
             return clonedState;
 
-        case StudentActionsType.SUCC_ADD:
+        case 'SUCC_ADD_STUDENT':
             clonedState.newUserHolding = false;
             return clonedState;
-        case StudentActionsType.PROC_ADD:
+        case 'PROC_ADD_STUDENT':
             clonedState.newUserHolding = true;
             return clonedState;
-        case StudentActionsType.FAILED_ADD:
+        case 'FAILED_ADD_STUDENT':
             clonedState.newUserHolding = false;
             return clonedState;
 
-        case StudentActionsType.SUCC_UPDATE:
+        case 'SUCC_UPDATE_STUDENT':
             clonedState.holding = false;
             for (let i = 0; i < clonedState.students.length; i++) {
                 if (clonedState.students[i].id === action.student.id) {
@@ -54,22 +54,22 @@ export function students(state: StudentStore = new StudentStore(), action: IActi
                 }
             }
             return clonedState;
-        case StudentActionsType.PROC_UPDATE:
+        case 'PROC_UPDATE_STUDENT':
             clonedState.holding = true;
             return clonedState;
-        case StudentActionsType.FAILED_UPDATE:
+        case 'FAILED_UPDATE_STUDENT':
             clonedState.holding = false;
             return clonedState;
 
-        case StudentActionsType.PROC_DELETE:
+        case 'PROC_DELETE_STUDENT':
             clonedState.holding = true;
             return clonedState;
-        case StudentActionsType.SUCC_DELETE:
+        case 'SUCC_DELETE_STUDENT':
             clonedState.total--;
             clonedState.students = clonedState.students.filter(_ => _.id !== action.id)
             clonedState.holding = false;
             return clonedState;
-        case StudentActionsType.FAILED_DELETE:
+        case 'FAILED_DELETE_STUDENT':
             clonedState.holding = false;
             return clonedState;
 

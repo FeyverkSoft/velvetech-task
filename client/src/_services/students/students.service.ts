@@ -1,5 +1,5 @@
 import { Config } from '../../core';
-import { PagedStudents } from './GuildInfo';
+import { PagedStudents } from './IStudent';
 import axios from 'axios';
 
 export class studentService {

@@ -1,12 +1,12 @@
 import { studentService } from '../../_services';
 import { StudentActionsType } from './StudentActionsType';
 import { alertInstance } from '..';
-import { PagedStudents, Gender, Student } from '../../_services/students/GuildInfo';
+import { Gender, Student } from '../../_services/students/IStudent';
 
 export class StudentsActions {
     addStudent(params: { id: string; publicId: string; firstName: string; lastName: string; secondName: string; gender: Gender; }): Function {
         return (dispatch: Function) => {
-            dispatch(request());
+            dispatch(StudentActionsType.PROC_ADD_STUDENT());
             studentService.addNewUser(
                 params.id,
                 params.publicId,
@@ -17,23 +17,20 @@ export class StudentsActions {
             )
                 .then(
                     data => {
-                        dispatch(success());
+                        dispatch(StudentActionsType.SUCC_ADD_STUDENT());
                         dispatch(this.getStudentList({ offset: 0, limit: 20 }))
                     })
                 .catch(
                     ex => {
                         dispatch(alertInstance.error(ex));
-                        dispatch(failure());
+                        dispatch(StudentActionsType.FAILED_ADD_STUDENT());
                     });
         }
-        function request() { return { type: StudentActionsType.PROC_ADD } }
-        function success() { return { type: StudentActionsType.SUCC_ADD } }
-        function failure() { return { type: StudentActionsType.FAILED_ADD } }
     }
 
     updateStudent(params: { id: string; publicId: string; firstName: string; lastName: string; secondName: string; gender: Gender; }): Function {
         return (dispatch: Function) => {
-            dispatch(request());
+            dispatch(StudentActionsType.PROC_UPDATE_STUDENT());
             studentService.updateStudent(
                 params.id,
                 params.publicId,
@@ -44,7 +41,7 @@ export class StudentsActions {
             )
                 .then(
                     data => {
-                        dispatch(success(new Student(params.id,
+                        dispatch(StudentActionsType.SUCC_UPDATE_STUDENT(new Student(params.id,
                             params.publicId,
                             params.firstName,
                             params.lastName,
@@ -54,12 +51,10 @@ export class StudentsActions {
                 .catch(
                     ex => {
                         dispatch(alertInstance.error(ex));
-                        dispatch(failure());
+                        dispatch(StudentActionsType.FAILED_UPDATE_STUDENT());
                     });
         }
-        function request() { return { type: StudentActionsType.PROC_UPDATE } }
-        function success(student: Student) { return { type: StudentActionsType.SUCC_UPDATE, student } }
-        function failure() { return { type: StudentActionsType.FAILED_UPDATE } }
+
     }
 
     getStudentList(params: {
@@ -68,40 +63,34 @@ export class StudentsActions {
         filter?: string
     }): Function {
         return (dispatch: Function) => {
-            dispatch(request());
+            dispatch(StudentActionsType.PROC_GET_STUDENTS());
             studentService.getStudentList(params.offset, params.limit, params.filter)
                 .then(
                     data => {
-                        dispatch(success(data));
+                        dispatch(StudentActionsType.SUCC_GET_STUDENTS(data));
                     })
                 .catch(
                     ex => {
-                        dispatch(failure());
+                        dispatch(StudentActionsType.FAILED_GET_STUDENTS());
                         dispatch(alertInstance.error(ex));
                     });
         }
-        function request() { return { type: StudentActionsType.PROC_GET_LIST } }
-        function success(students: PagedStudents) { return { type: StudentActionsType.SUCC_GET_LIST, students } }
-        function failure() { return { type: StudentActionsType.FAILED_GET_LIST } }
     }
 
     deleteUser(id: string): Function {
         return (dispatch: Function) => {
-            dispatch(request());
+            dispatch(StudentActionsType.PROC_DELETE_STUDENT());
             studentService.deleteUser(id)
                 .then(
                     data => {
-                        dispatch(success(id));
+                        dispatch(StudentActionsType.SUCC_DELETE_STUDENT(id));
                     })
                 .catch(
                     ex => {
                         dispatch(alertInstance.error(ex));
-                        dispatch(failure());
+                        dispatch(StudentActionsType.FAILED_DELETE_STUDENT());
                     });
         }
-        function request() { return { type: StudentActionsType.PROC_DELETE } }
-        function success(id: string) { return { type: StudentActionsType.SUCC_DELETE, id } }
-        function failure() { return { type: StudentActionsType.FAILED_DELETE } }
     }
 }
 

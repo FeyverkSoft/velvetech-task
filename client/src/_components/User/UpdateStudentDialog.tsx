@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Modal, Select } from 'antd';
 import { IStore } from '../../_helpers';
-import { Gender, genderList, IStudent } from '../../_services/students/GuildInfo';
+import { Gender, genderList, IStudent } from '../../_services/students/IStudent';
 import { connect } from 'react-redux';
 
 interface FormProps {

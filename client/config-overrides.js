@@ -3,6 +3,7 @@
 const {
     override,
     fixBabelImports,
+    addBabelPlugin,
 } = require("customize-cra");
 
 
@@ -11,4 +12,8 @@ module.exports = override(
         libraryDirectory: 'es',
         style: true
     }),
+    addBabelPlugin([
+        "@babel/plugin-transform-typescript",
+        { allowNamespaces: true }
+    ]),
 );

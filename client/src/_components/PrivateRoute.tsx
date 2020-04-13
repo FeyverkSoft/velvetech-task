@@ -11,9 +11,9 @@ export const PrivateRoute = ({ component, ...rest }: RouteProps) => {
         return TokenStorage.isAuthenticated() ?
             <Component {...rest} {...props} /> :
             <Redirect
-                exact={rest.exact}
-                strict={rest.strict}
-                children={rest.children}
+                exact
+                strict
+                children
                 to={{ pathname: '/auth' }} />
     };
 

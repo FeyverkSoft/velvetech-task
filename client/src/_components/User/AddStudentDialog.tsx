@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Modal, Select } from 'antd';
 import { getGuid } from '../../_helpers';
-import { Gender, genderList } from '../../_services/students/GuildInfo';
+import { Gender, genderList } from '../../_services/students/IStudent';
 
 interface FormProps {
     isLoading?: boolean,

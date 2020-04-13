@@ -1,17 +1,66 @@
-export enum StudentActionsType {
-    PROC_GET_LIST = 'PROC_GET_STUDENTS',
-    SUCC_GET_LIST = 'SUCC_GET_STUDENTS',
-    FAILED_GET_LIST = 'FAILED_GET_STUDENTS',
+import { PagedStudents, Student } from "../../_services/students/IStudent"
 
-    SUCC_ADD = "SUCC_ADD_STUDENT",
-    PROC_ADD = "PROC_ADD_STUDENT",
-    FAILED_ADD = "FAILED_ADD_STUDENT",
+export namespace StudentActionsType {
+    export const PROC_GET_STUDENTS = () => ({
+        type: "PROC_GET_STUDENTS",
+    } as const)
+    export const SUCC_GET_STUDENTS = (students: PagedStudents) => ({
+        type: "SUCC_GET_STUDENTS",
+        students: students,
+    } as const)
+    export const FAILED_GET_STUDENTS = () => ({
+        type: "FAILED_GET_STUDENTS",
+    } as const)
 
-    PROC_DELETE = "PROC_DELETE_STUDENT",
-    SUCC_DELETE = "SUCC_DELETE_STUDENT",
-    FAILED_DELETE = "FAILED_DELETE_STUDENT",
 
-    PROC_UPDATE = "PROC_UPDATE_STUDENT",
-    SUCC_UPDATE = "SUCC_UPDATE_STUDENT",
-    FAILED_UPDATE = "FAILED_UPDATE_STUDENT"
+    export const SUCC_ADD_STUDENT = () => ({
+        type: "SUCC_ADD_STUDENT",
+    } as const)
+    export const PROC_ADD_STUDENT = () => ({
+        type: "PROC_ADD_STUDENT",
+    } as const)
+    export const FAILED_ADD_STUDENT = () => ({
+        type: "FAILED_ADD_STUDENT",
+    } as const)
+
+
+    export const PROC_UPDATE_STUDENT = () => ({
+        type: "PROC_UPDATE_STUDENT",
+    } as const)
+    export const SUCC_UPDATE_STUDENT = (student: Student) => ({
+        type: "SUCC_UPDATE_STUDENT",
+        student: student,
+    } as const)
+    export const FAILED_UPDATE_STUDENT = () => ({
+        type: "FAILED_UPDATE_STUDENT",
+    } as const)
+
+
+    export const PROC_DELETE_STUDENT = () => ({
+        type: "PROC_DELETE_STUDENT",
+    } as const)
+    export const SUCC_DELETE_STUDENT = (id: string) => ({
+        type: "SUCC_DELETE_STUDENT",
+        id: id,
+    } as const)
+    export const FAILED_DELETE_STUDENT = () => ({
+        type: "FAILED_DELETE_STUDENT",
+    } as const)
 }
+
+export type StudentActionsTypes =
+    ReturnType<typeof StudentActionsType.PROC_GET_STUDENTS> |
+    ReturnType<typeof StudentActionsType.SUCC_GET_STUDENTS> |
+    ReturnType<typeof StudentActionsType.FAILED_GET_STUDENTS> |
+
+    ReturnType<typeof StudentActionsType.SUCC_ADD_STUDENT> |
+    ReturnType<typeof StudentActionsType.PROC_ADD_STUDENT> |
+    ReturnType<typeof StudentActionsType.FAILED_ADD_STUDENT> |
+
+    ReturnType<typeof StudentActionsType.PROC_UPDATE_STUDENT> |
+    ReturnType<typeof StudentActionsType.SUCC_UPDATE_STUDENT> |
+    ReturnType<typeof StudentActionsType.FAILED_UPDATE_STUDENT> |
+
+    ReturnType<typeof StudentActionsType.PROC_DELETE_STUDENT> |
+    ReturnType<typeof StudentActionsType.SUCC_DELETE_STUDENT> |
+    ReturnType<typeof StudentActionsType.FAILED_DELETE_STUDENT>;
